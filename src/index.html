@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+      <meta charset="utf-8">
+      <!-- Nous chargeons les fichiers CDN de Leaflet. Le CSS AVANT le JS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+      <link rel="stylesheet" href="styles.css"  />
+      <style type="text/css">
+      #map{
+        height:500px;
+      }
+      </style>
+      <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+
+      <script type="module" src="./museeManager.js"></script>
+      <script type="module" src="./index.js"></script>
+
+      <title>Musées</title>
+
+          </head>
+
+
+          <body>
+
+              <div id="popin_outside" class="popin_outside"></div>
+              <div id="pop-in" class="pop-in">
+                <div class='popin_nav'>
+                    <span id='popin_previous' class='popin_previous'>  < Précédent </span>
+                    <span id='popin_next' class='popin_next'> Suivant >  </span>
+                </div>
+                <div id="popin_titre" class="popin_titre">Musée</div>
+                <div id="popin_img" class='popin_img'><img  src='../img/musee.jpeg'></div>
+                <div id="popin_description" class="popin_description">Description</div>
+
+              </div>
+
+            <div class='container'>
+              <div id="map" class="map" height=100%>	</div>
+                <p id="titre_liste_musee" class="titre_liste_musee">Musées à proximité</p>
+                <div class="liste_musees" id="liste_musees"></div>
+                  <div id="liste_oeuvre"></div>
+            </div>
+    </body>
+</html>

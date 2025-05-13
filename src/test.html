@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Le Buveur de Cézanne</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    img {
+      max-width: 80%;
+      height: auto;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Image : Le Buveur de Paul Cézanne</h1>
+  <button onclick="fetchCezanneImage()">Charger l'image</button>
+  <div id="image-container"></div>
+
+  <script>
+    async function fetchCezanneImage() {
+      const container = document.getElementById("image-container");
+      container.innerHTML = "Chargement...";
+
+      try {
+        // Étape 1 : recherche du fichier
+        const searchQuery = 'Buveur Cezanne';
+        const searchUrl = "https://commons.wikimedia.org/w/api.php?action=query&list=search&srnamespace=6&srsearch=" + encodeURIComponent(searchQuery);
+console.log(searchUrl);
+        const searchResponse = await fetch(searchUrl,{
+      method: 'GET',
+      withCredentials: true,
+      crossorigin: true,
+      mode: 'no-cors'
+    }) ;
+        const searchData = await searchResponse.json();
+console.log(searchData);
+        const pageTitle = searchData.query.search.find(p => p.title.startsWith("File:"))?.title;
+
+        if (!pageTitle) {
+          container.innerHTML = "Aucune image trouvée.";
+          return;
+        }
+
+        // Étape 2 : récupération des infos de l’image
+        const imageInfoUrl = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&titles=${encodeURIComponent(pageTitle)}&iiprop=url';
+
+        const imageInfoResponse = await fetch(imageInfoUrl);
+        const imageInfoData = await imageInfoResponse.json();
+console.log(imageInfoData);
+        const pages = imageInfoData.query.pages;
+        const imageUrl = Object.values(pages)[0]?.imageinfo?.[0]?.url;
+
+        if (imageUrl) {
+          container.innerHTML = `<img src="${imageUrl}" alt="Le Buveur de Cézanne">`;
+        } else {
+          container.innerHTML = "Image non disponible.";
+        }
+
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = "Erreur lors du chargement de l'image.";
+      }
+    }
+  </script>
+
+</body>
+</html>
